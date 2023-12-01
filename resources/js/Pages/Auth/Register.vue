@@ -1,18 +1,23 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 const form = useForm({
     name: '',
     email: '',
+    phone:'' ,
+    city: '',
+    document: '',
     password: '',
     password_confirmation: '',
+    rol_id:'',
+    semester:'0',
     terms: false,
 });
 
@@ -28,12 +33,13 @@ const submit = () => {
 
     <AuthenticationCard>
         <template #logo>
-            <AuthenticationCardLogo />
+            <ApplicationLogo class="block h-11 w-auto"/>
         </template>
 
         <form @submit.prevent="submit">
+
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="nombre" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -45,6 +51,82 @@ const submit = () => {
                 />
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
+
+            <div class="mt-4">
+                <InputLabel for="phone" value="telefono" />
+                <TextInput
+                    id="phone"
+                    v-model="form.phone"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autofocus
+                    pattern="[0-9]+" 
+                    autocomplete="phone"
+                />
+                <InputError class="mt-2" :message="form.errors.phone" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="document" value="documento de identidad">
+                </InputLabel>
+                <TextInput
+                    id="document"
+                    v-model="form.document"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autofocus
+                    pattern="[0-9]+" 
+                    autocomplete="document"
+                    :message="solo"
+                    
+                />
+                <InputError class="mt-2" :message="form.errors.document"/>
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="city" value="ciudad" />
+                <TextInput
+                    id="city"
+                    v-model="form.city"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autofocus
+                    autocomplete="city"
+                />
+                <InputError class="mt-2" :message="form.errors.city" />
+            </div>
+
+                        
+            <div class="  input-form mt-4 grid">
+                
+                <label class=" items-center justify-center y-center">area de estudio:</label>
+
+                <select class="form-control mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                             v-model="form.rol_id">
+                            <option value="">Seleccione…</option>
+                            <option value="1">Estudiante</option>
+                            <option value="2">Profesor y administrativos</option>
+                </select>
+            </div>
+
+            <div class="   mt-4 grid" v-if="form.rol_id === '1'"> 
+                
+                <label class=" items-center justify-center y-center">Semestre:</label>
+
+                <select class=" mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                         v-model="form.semester">
+                            <option value="0">Seleccione semestre…</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                </select>
+            </div>
+
 
             <div class="mt-4">
                 <InputLabel for="email" value="Email" />

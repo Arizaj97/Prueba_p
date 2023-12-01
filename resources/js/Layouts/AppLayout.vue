@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
-import ApplicationMark from '@/Components/ApplicationMark.vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -42,7 +42,7 @@ const logout = () => {
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
-                                    <ApplicationMark class="block h-9 w-auto" />
+                                    <ApplicationLogo class="block h-9 w-auto" />
                                 </Link>
                             </div>
 
@@ -52,6 +52,37 @@ const logout = () => {
                                     Dashboard
                                 </NavLink>
                             </div>
+                            
+                            <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if=" $page.props.auth.user.rol_id === 2">
+                                <NavLink :href="route('teache.index')" :active="route().current('')">
+                                  Materias Asignaturas a dictar
+                                </NavLink>
+                            </div>
+
+                            <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if=" $page.props.auth.user.rol_id === 1">
+                                <NavLink :href="route('studen.index')" :active="route().current('')">
+                                    Elige las asignaturas  
+                                </NavLink>
+                            </div>
+
+                            <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if=" $page.props.auth.user.rol_id === 2">
+                                <NavLink :href="route('teache.show', [$page.props.auth.user.id])" :active="route().current('')">
+                                  Tus asignaturas
+                                </NavLink>
+                            </div>
+
+                            <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if=" $page.props.auth.user.rol_id === 1">
+                                <NavLink :href="route('studen.show', [$page.props.auth.user.id])" :active="route().current('')">
+                                  Tus asignaturas
+                                </NavLink>
+                            </div>
+
+                            <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if=" $page.props.auth.user.rol_id === 2">
+                                <NavLink :href="route('teache.create',)" :active="route().current('')">
+                                  Crear clase
+                                </NavLink>
+                            </div>
+
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
